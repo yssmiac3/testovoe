@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Consumer;
+use App\Http\Requests\ConsumerRequest;
 
 class ConsumerController extends Controller
 {
@@ -25,18 +26,14 @@ class ConsumerController extends Controller
         return $consumer;
     }
 
-    public function store(Request $request){
-        $validatedData = $request->validate([
-            'first_name' => 'required|min:2|max:30',
-            'last_name' => 'required|min:2|max:30',
-            'email' => 'required|unique:consumers|min:5|max:30',
-        ]);
+    public function store(ConsumerRequest $request){
+        $validatedData = $request->validated();
         $consumer = Consumer::create($validatedData);
         return response()->json($consumer, 201);
     }
 
-    public function update(Request $request, Consumer $consumer){
-        $consumer->update($request->all());
+    public function update(ConsumerRequest $request, Consumer $consumer){
+        $consumer->update($request->validated()->all());
         return response()->json($consumer, 200);
     }
 
