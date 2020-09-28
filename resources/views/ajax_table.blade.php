@@ -40,12 +40,14 @@
         <input type="submit" value="confirm_button">
     </form>
 
+    <br><br>
+
     <button id="refresh_button">Refresh</button>
         
     <script>
 
         $(function() {
-            $(#blockForm).submit(function() {
+            $(#blockForm).submit(function(event) {
 
                 var formData = {
                     'first_name': $('input[name=first_name]').val();
@@ -56,8 +58,8 @@
                 $(#blockForm).block();
 
                 $.ajax({
-                    type: "POST",
-                    url: "/api/consumers", 
+                    type: 'POST',
+                    url: '/api/consumers', 
                     data: formData,
                     dataType: 'json',
                     success: function() {
@@ -72,12 +74,12 @@
                 event.prevetDefault();
             });
 
-            $(#refresh_button).click(function() {
+            $(#refresh_button).click(function(event) {
                 $(#refresh_button).block();
 
                 $ajax({
-                    type: "GET",
-                    url: "/api/consumers",
+                    type: 'GET',
+                    url: '/api/consumers',
                     success: function() {
                         $(#consumers).unblock();
                     },
